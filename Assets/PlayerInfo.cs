@@ -8,6 +8,8 @@ public class PlayerInfo : MonoBehaviour
     private Vector2 originalScale;
     private EntityInfo ei;
 
+    private int bgDivide = 1;
+
     private void Start()
     {
         ei = GetComponent<EntityInfo>();
@@ -19,6 +21,11 @@ public class PlayerInfo : MonoBehaviour
 
     private void Update()
     {
+        if (ei.size < 10)
+            bgDivide = 1;
+        else if (ei.size < 100)
+            bgDivide = 10;
+
         mr.sharedMaterial.mainTextureScale = originalScale * ei.size;
         Camera.main.orthographicSize = 3 * ei.size;
     }

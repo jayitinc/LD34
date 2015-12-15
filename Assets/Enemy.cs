@@ -8,20 +8,28 @@ public class Enemy : MonoBehaviour
 {
     public float speed = 3;
 
+    public GameObject materialPrefab;
+
     private Transform player;
     private EntityInfo playerEI;
     private Rigidbody2D rb;
     private EntityInfo ei;
 
+    private Vector2 lastMovementVector;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         ei = GetComponent<EntityInfo>();
+
+        StartCoroutine(SpawnMaterial());
     }
 
     private void Update()
     {
-        List<RaycastHit2D> hit = new List<RaycastHit2D>(Physics2D.CircleCastAll(transform.position, 5 * ei.size, Vector2.zero));
+        speed = 2 + (ei.size / 10);
+
+        List<RaycastHit2D> hit = new List<RaycastHit2D>(Physics2D.CircleCastAll(transform.position, 100, Vector2.zero));
 
         bool enemiesExist = false;
 
@@ -31,14 +39,14 @@ public class Enemy : MonoBehaviour
                 enemiesExist = true;
         }
 
-        if (enemiesExist)
+        /*if (enemiesExist)
         {
             for (int i = 0; i < hit.Count; i++)
             {
                 if (hit[i].collider.GetComponent<Enemy>() == null && hit[i].collider.GetComponent<PlayerInfo>() == null)
                     hit.RemoveAt(i);
             }
-        }
+        }*/
 
         //hit.Sort((a, b) => (Vector2.Distance(a.collider.transform.position, transform.position)).CompareTo(Vector2.Distance(b.collider.transform.position, transform.position)));
         hit.Sort((a, b) => a.collider.GetComponent<EntityInfo>().size.CompareTo(b.collider.GetComponent<EntityInfo>().size));
@@ -48,7 +56,7 @@ public class Enemy : MonoBehaviour
 
         Vector2 playerDifference = player.position - transform.position;
         Vector2 directionVector = playerDifference.normalized;
-        Vector2 movementVector = -directionVector * speed;
+        Vector2 movementVector = directionVector * speed;
 
         if (playerEI.size < ei.size)
         {
@@ -62,8 +70,27 @@ public class Enemy : MonoBehaviour
 
             playerDifference = player.position - transform.position;
             directionVector = playerDifference.normalized;
-            movementVector = -directionVector * speed;
+            movementVector = lastMovementVector;
         }
-        rb.velocity = movementVector;
+        else
+        {
+            lastMovementVector = movementVector;
+        }
+
+        if (!Game.PAUSED)
+            rb.velocity = movementVector;
+    }
+
+    private IEnumerator SpawnMaterial()
+    {
+        while (true)
+        {
+            if (!Game.PAUSED)
+            {
+                GameObject go = Instantiate(materialPrefab, new Vector2(Random.Range(transform.position.x - (8 * ei.size), transform.position.x + (8 * ei.size)), Random.Range(transform.position.y - (8 * ei.size), transform.position.y + (8 * ei.size))), Quaternion.identity) as GameObject;
+                go.name = "Space Material";
+                yield return new WaitForSeconds(30f);
+            }
+        }
     }
 }

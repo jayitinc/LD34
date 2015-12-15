@@ -72,11 +72,13 @@
     <Compile Include="Assets\Enemy.cs" />
     <Compile Include="Assets\EntityInfo.cs" />
     <Compile Include="Assets\EntityLayeringManager.cs" />
+    <Compile Include="Assets\Game.cs" />
     <Compile Include="Assets\PlayerInfo.cs" />
     <Compile Include="Assets\PlayerMovement.cs" />
     <Compile Include="Assets\ResourceDisplay.cs" />
     <Compile Include="Assets\Resources.cs" />
     <Compile Include="Assets\SplashLogo.cs" />
+    <Compile Include="Assets\UIManager.cs" />
     <Compile Include="Assets\WorldMaterialManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

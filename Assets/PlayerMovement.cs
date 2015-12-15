@@ -2,6 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(EntityInfo))]
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
@@ -9,15 +10,19 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 inputVector;
     private Vector2 movementVector;
 
+    private EntityInfo ei;
     Rigidbody2D rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        ei = GetComponent<EntityInfo>();
     }
 
     private void Update()
     {
+        speed = 3 * ei.size;
+
         float left = 0;
         float right = 0;
         float up = 0;
@@ -46,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
         inputVector = new Vector2(right - left, up - down).normalized;
         movementVector = inputVector * speed;
 
-        rb.velocity = movementVector;
+        if (!Game.PAUSED)
+            rb.velocity = movementVector;
     }
 }
