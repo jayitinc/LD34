@@ -53,8 +53,9 @@ public class WorldMaterialManager : MonoBehaviour
                         break;
                 }
 
-                yield return new WaitForSeconds(1f);
+                
             }
+            yield return new WaitForSeconds(1f);
         }
     }
 
@@ -69,8 +70,10 @@ public class WorldMaterialManager : MonoBehaviour
                 EntityInfo goEI = go.GetComponent<EntityInfo>();
                 float size = Random.Range(1, playerEI.size + 5);
                 goEI.size = size;
-                yield return new WaitForSeconds(10f);
+                
             }
+
+            yield return new WaitForSeconds(10f);
         }
     }
 }

@@ -3,16 +3,16 @@ using System.Collections;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject[] UIs;
+    public GameObject[] uis;
 
     public void SwitchUI(int ui)
     {
-        for (int i = 0; i < UIs.Length; i++)
+        for (int i = 0; i < uis.Length; i++)
         {
             if (i == ui)
-                UIs[i].SetActive(true);
+                uis[i].SetActive(true);
             else
-                UIs[i].SetActive(false);
+                uis[i].SetActive(false);
         }
     }
 
@@ -23,6 +23,6 @@ public class UIManager : MonoBehaviour
 
     public void ReloadGame()
     {
-        Application.LoadLevel("Game");
+        Application.LoadLevel("SplashLogo");
     }
 }
