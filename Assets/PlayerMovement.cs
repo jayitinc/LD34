@@ -3,6 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(EntityInfo))]
+[RequireComponent(typeof(AudioSource))]
 public class PlayerMovement : MonoBehaviour
 {
     public float speed;
@@ -32,6 +33,8 @@ public class PlayerMovement : MonoBehaviour
             up = 1;
         else
             up = 0;
+
+        //LindsayLikes told me to hide her name in the code...
 
         if (Input.GetKey(KeyCode.A))
             left = 1;

@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 
     public void ReloadGame()
     {
+        Game.PAUSED = true;
         Application.LoadLevel("SplashLogo");
     }
 }
